@@ -1,0 +1,434 @@
+.project-modal {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: clamp(1rem, 3vw, 3rem);
+  background: rgb(0 0 0 / 82%);
+  animation: project-modal-overlay-in 240ms ease both;
+}
+
+.project-modal__dialog {
+  position: relative;
+  display: grid;
+  width: min(94vw, 92rem);
+  height: min(88svh, 56rem);
+  grid-template-columns: minmax(0, 2.08fr) minmax(20rem, 0.92fr);
+  overflow: hidden;
+  border: 1px solid #333;
+  color: #f2f2f2;
+  background: #0d0d0d;
+  animation: project-modal-dialog-in 240ms ease both;
+}
+
+.project-modal.is-closing {
+  animation: project-modal-overlay-out 220ms ease forwards;
+}
+
+.project-modal.is-closing .project-modal__dialog {
+  animation: project-modal-dialog-out 220ms ease forwards;
+}
+
+.project-modal__media {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-right: 1px solid #303030;
+  background: #151515;
+}
+
+.project-modal__placeholder {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 24rem;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: clamp(1.25rem, 2vw, 2rem);
+  color: #7b7b7b;
+}
+
+.project-modal__placeholder::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    linear-gradient(90deg, transparent 49.9%, rgb(255 255 255 / 4%) 50%, transparent 50.1%),
+    linear-gradient(transparent 49.9%, rgb(255 255 255 / 4%) 50%, transparent 50.1%);
+  background-size: clamp(6rem, 12vw, 12rem) clamp(6rem, 12vw, 12rem);
+  content: '';
+}
+
+.project-modal__placeholder span {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.project-modal__placeholder strong {
+  align-self: flex-end;
+  color: #292929;
+  font-size: clamp(10rem, 24vw, 24rem);
+  font-weight: 800;
+  line-height: 0.68;
+  letter-spacing: -0.1em;
+}
+
+.project-modal__asset {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #111;
+}
+
+.project-modal__panel {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: clamp(1.25rem, 2.2vw, 2.5rem);
+}
+
+.project-modal__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.project-modal__topline > span,
+.project-modal__scope > p {
+  margin: 0;
+  color: #696969;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.project-modal__topline button {
+  position: absolute;
+  z-index: 3;
+  top: clamp(1.25rem, 2.2vw, 2.5rem);
+  right: clamp(1.25rem, 2.2vw, 2.5rem);
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border: 1px solid #3a3a3a;
+  border-radius: 0;
+  padding: 0;
+  color: #aaa;
+  background: transparent;
+  font: inherit;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.project-modal__topline button:hover,
+.project-modal__topline button:focus-visible {
+  border-color: #777;
+  color: #fff;
+  outline: none;
+}
+
+.project-modal h2 {
+  margin: clamp(1.25rem, 2vw, 2rem) 0 0;
+  font-size: clamp(2.5rem, 4vw, 4.75rem);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.06em;
+}
+
+.project-modal__metadata {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.5rem;
+  margin-top: clamp(1.1rem, 1.8vw, 1.75rem);
+}
+
+.project-modal__metadata div {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.project-modal__metadata span,
+.project-modal__metadata time {
+  color: #888;
+  font-size: 0.7rem;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.project-modal__overview {
+  margin: clamp(1.1rem, 1.8vw, 1.75rem) 0 0;
+  color: #aaa;
+  font-size: clamp(0.95rem, 1.1vw, 1.08rem);
+  line-height: 1.55;
+}
+
+.project-modal__scope,
+.project-modal__confidentiality {
+  margin-top: clamp(1.25rem, 1.8vw, 1.75rem);
+}
+
+.project-modal__scope {
+  border-top: 1px solid #303030;
+  padding-top: 0.85rem;
+}
+
+.project-modal__scope ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem 1rem;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  color: #c5c5c5;
+  font-size: 0.82rem;
+  list-style: none;
+}
+
+@media (min-width: 961px) {
+  .project-modal__scope li:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .project-modal__scope li:nth-child(2) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .project-modal__scope li:nth-child(3) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .project-modal__scope li:nth-child(4) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .project-modal__scope li:nth-child(5) {
+    grid-column: 1;
+    grid-row: 3;
+  }
+}
+
+.project-modal__confidentiality {
+  border: 1px solid #303030;
+  padding: 0.75rem 0.8rem;
+  background: #131313;
+}
+
+.project-modal__confidentiality-label {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.project-modal__confidentiality-label > span {
+  position: relative;
+  width: 0.58rem;
+  height: 0.48rem;
+  border: 1px solid #777;
+}
+
+.project-modal__confidentiality-label > span::before {
+  position: absolute;
+  bottom: calc(100% - 1px);
+  left: 50%;
+  width: 0.3rem;
+  height: 0.28rem;
+  border: 1px solid #777;
+  border-bottom: 0;
+  border-radius: 0.3rem 0.3rem 0 0;
+  content: '';
+  transform: translateX(-50%);
+}
+
+.project-modal__confidentiality strong {
+  color: #9b9b9b;
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.project-modal__confidentiality p {
+  margin: 0.5rem 0 0;
+  color: #b5b5b5;
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.project-modal__confidentiality small {
+  display: block;
+  margin-top: 0.25rem;
+  color: #727272;
+  font-size: 0.68rem;
+  line-height: 1.45;
+}
+
+.project-modal__navigation {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: auto;
+  border-top: 1px solid #303030;
+  padding-top: 1rem;
+}
+
+.project-modal__navigation button {
+  display: grid;
+  gap: 0.35rem;
+  border: 0;
+  padding: 0;
+  color: #777;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.project-modal__navigation button:last-child {
+  text-align: right;
+}
+
+.project-modal__navigation span {
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.project-modal__navigation strong {
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.project-modal__navigation button:hover,
+.project-modal__navigation button:focus-visible {
+  color: #d2d2d2;
+  outline: none;
+}
+
+@keyframes project-modal-overlay-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes project-modal-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem) scale(0.99);
+  }
+}
+
+@keyframes project-modal-overlay-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes project-modal-dialog-out {
+  to {
+    opacity: 0;
+    transform: translateY(0.5rem) scale(0.99);
+  }
+}
+
+@media (max-width: 960px) {
+  .project-modal {
+    padding: 0.5rem;
+  }
+
+  .project-modal__dialog {
+    width: 100%;
+    height: calc(100svh - 1rem);
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(15rem, 42svh) minmax(0, 1fr);
+  }
+
+  .project-modal__media {
+    border-right: 0;
+    border-bottom: 1px solid #303030;
+  }
+
+  .project-modal__placeholder {
+    min-height: 0;
+  }
+
+  .project-modal__panel {
+    padding: 1.25rem;
+  }
+
+  .project-modal__topline button {
+    top: 1.25rem;
+    right: 1.25rem;
+  }
+
+  .project-modal h2 {
+    max-width: 12ch;
+    font-size: clamp(2.5rem, 8vw, 4.25rem);
+  }
+
+  .project-modal__scope ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-modal {
+    padding: 0;
+  }
+
+  .project-modal__dialog {
+    height: 100svh;
+    border-right: 0;
+    border-left: 0;
+    grid-template-rows: minmax(13rem, 36svh) minmax(0, 1fr);
+  }
+
+  .project-modal__panel {
+    padding: 1rem;
+  }
+
+  .project-modal__topline button {
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .project-modal h2 {
+    font-size: clamp(2.35rem, 12vw, 3.5rem);
+  }
+
+  .project-modal__navigation {
+    grid-template-columns: 1fr;
+  }
+
+  .project-modal__navigation button:last-child {
+    text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-modal,
+  .project-modal__dialog,
+  .project-modal.is-closing,
+  .project-modal.is-closing .project-modal__dialog {
+    animation-duration: 0.01ms;
+  }
+}
