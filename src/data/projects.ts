@@ -20,6 +20,7 @@ export type Project = {
   year: string
   categories: string[]
   overview: string
+  role?: string[]
   scope: string[]
   confidentiality: ProjectConfidentiality | null
   media: ProjectMedia
@@ -41,6 +42,7 @@ const detailsComingSoon =
 export const projects: Project[] = [
   {
     slug: 'safety-briefing-film',
+    role: ['Motion Design', 'Visual Storytelling', 'Editing'],
     number: '01',
     title: 'Safety Briefing Film',
     year: '2026',
@@ -79,6 +81,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'digital-service-explainer',
+    role: ['Motion Design', 'Product Communication', 'UI Visualization'],
     number: '02',
     title: 'Digital Service Explainer',
     year: '2026',
@@ -112,6 +115,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'innovation-explainer',
+    role: ['Motion Design', 'Explainer Animation', 'Editing'],
     number: '03',
     title: 'Innovation Explainer',
     year: '2026',
@@ -145,6 +149,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'policy-program-explainer',
+    role: ['Motion Design', 'Information Design', '2D Animation'],
     number: '04',
     title: 'Policy & Program Explainer',
     year: '2026',
@@ -182,6 +187,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'independence-day-motion',
+    role: ['Motion Design', 'Campaign Visuals', 'Typography Animation'],
     number: '05',
     title: 'Independence Day Motion',
     year: '2026',

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Header from './components/Header'
+import ConfidentialStatus from './components/ConfidentialStatus'
 import ProjectModal from './components/ProjectModal'
 import useHeroPreview, { heroProjects, heroSelectorLabel } from './components/useHeroPreview'
 import { getProjectDetail } from './data/projectDetails'
@@ -68,7 +69,7 @@ function SelectedWork({ onOpenProject }: SelectedWorkProps) {
             <div className="work-item__meta">
               <p>{project.categories.join(' / ')}</p>
               {project.series && <span>Series — {project.series}</span>}
-              {project.note && <span>{project.note}</span>}
+              {project.confidentiality && <ConfidentialStatus />}
             </div>
             <time>{project.year}</time>
           </article>
@@ -334,6 +335,22 @@ function App() {
                   playsInline
                   preload="metadata"
                 />
+                  <div className="project-preview__controls">
+                  <button
+                    type="button"
+                    className="project-preview__audio"
+                    aria-label={heroPreview.playbackEnabled ? 'Pause preview' : 'Play preview'}
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      heroPreview.togglePlayback()
+                    }}
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                      {heroPreview.playbackEnabled ? (
+                        <><path d="M8 5v14" /><path d="M16 5v14" /></>
+                      ) : <path d="m8 5 11 7-11 7Z" />}
+                    </svg>
+                  </button>
                   <button
                     type="button"
                     className="project-preview__audio"
@@ -351,6 +368,7 @@ function App() {
                       )}
                     </svg>
                   </button>
+                  </div>
                 </div>
               )}
             </div>

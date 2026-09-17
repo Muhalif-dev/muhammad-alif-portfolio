@@ -192,14 +192,12 @@ function ProjectModal({ project, onClose, onProjectChange }: ProjectModalProps) 
             {project.overview}
           </p>
 
-          <div className="project-modal__scope">
-            <p>Selected Scope</p>
-            <ul>
-              {project.scope.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
+          {project.role && project.role.length > 0 && (
+            <div className="project-modal__role">
+              <p>My Role</p>
+              <span>{project.role.join(' · ')}</span>
+            </div>
+          )}
 
           {project.confidentiality && (
             <div className="project-modal__confidentiality">

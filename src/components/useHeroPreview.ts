@@ -21,9 +21,12 @@ export default function useHeroPreview(paused: boolean) {
   )
   const [hidden, setHidden] = useState(() => document.hidden)
   const [muted, setMuted] = useState(true)
+  const [manuallyPaused, setManuallyPaused] = useState(false)
+  const [motionRequested, setMotionRequested] = useState(false)
   const audioPreferenceRef = useRef(true)
   const videoRef = useRef<HTMLVideoElement>(null)
   const project = heroProjects[selection.index]
+  const playbackEnabled = !manuallyPaused && (!reducedMotion || motionRequested)
 
   useEffect(() => {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -38,7 +41,7 @@ export default function useHeroPreview(paused: boolean) {
   }, [])
 
   useEffect(() => {
-    if (paused || hidden || reducedMotion || selection.mode === 'hover' || selection.mode === 'selected') return
+    if (paused || hidden || !playbackEnabled || selection.mode === 'hover' || selection.mode === 'selected') return
     const delay = selection.mode === 'resume' ? 700 : 5000
     const timer = window.setTimeout(() => {
       setSelection((current) => ({
@@ -48,14 +51,23 @@ export default function useHeroPreview(paused: boolean) {
       }))
     }, delay)
     return () => window.clearTimeout(timer)
-  }, [selection, paused, hidden, reducedMotion])
+  }, [selection, paused, hidden, playbackEnabled])
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    video.muted = audioPreferenceRef.current
+    return () => {
+      video.pause()
+      video.currentTime = 0
+    }
+  }, [selection.index, selection.revision])
 
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
     let cancelled = false
-    video.muted = audioPreferenceRef.current
-    if (!paused && !hidden) {
+    if (!paused && !hidden && playbackEnabled && !video.ended) {
       void video.play().catch(() => {
         if (cancelled) return
         video.muted = true
@@ -68,9 +80,8 @@ export default function useHeroPreview(paused: boolean) {
     return () => {
       cancelled = true
       video.pause()
-      video.currentTime = 0
     }
-  }, [selection.index, selection.revision, paused, hidden])
+  }, [selection.index, selection.revision, paused, hidden, playbackEnabled])
 
   const select = (index: number, mode: Mode) => {
     videoRef.current?.pause()
@@ -101,6 +112,18 @@ export default function useHeroPreview(paused: boolean) {
   }
 
   const pause = () => videoRef.current?.pause()
+  const togglePlayback = () => {
+    if (playbackEnabled) {
+      videoRef.current?.pause()
+      setManuallyPaused(true)
+    } else {
+      setManuallyPaused(false)
+      setMotionRequested(true)
+      if (videoRef.current?.ended) videoRef.current.currentTime = 0
+      // Explicit Play resumes rotation even while the controls are focused.
+      setSelection((current) => ({ ...current, mode: 'auto' }))
+    }
+  }
 
-  return { project, selection, videoRef, select, release, enter, pause, muted, toggleAudio }
+  return { project, selection, videoRef, select, release, enter, pause, muted, toggleAudio, playbackEnabled, togglePlayback }
 }

@@ -105,7 +105,8 @@
 }
 
 .project-modal__topline > span,
-.project-modal__scope > p {
+.project-modal__scope > p,
+.project-modal__role > p {
   margin: 0;
   color: #696969;
   font-size: 0.64rem;
@@ -184,6 +185,18 @@
 .project-modal__scope {
   border-top: 1px solid #303030;
   padding-top: 0.85rem;
+}
+
+.project-modal__role {
+  margin-top: 0.85rem;
+}
+
+.project-modal__role > span {
+  display: block;
+  margin-top: 0.35rem;
+  color: #c5c5c5;
+  font-size: 0.82rem;
+  line-height: 1.4;
 }
 
 .project-modal__scope ul {
@@ -416,11 +429,24 @@
   }
 
   .project-modal__navigation {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project-modal__navigation button {
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .project-modal__navigation span {
+    white-space: nowrap;
+  }
+
+  .project-modal__navigation strong {
+    display: none;
   }
 
   .project-modal__navigation button:last-child {
-    text-align: left;
+    text-align: right;
   }
 }
 

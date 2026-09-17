@@ -1,0 +1,76 @@
+.confidential-status {
+  position: relative;
+  z-index: 3;
+  justify-self: start;
+}
+
+.confidential-status button {
+  display: block;
+  border: 1px solid #555;
+  border-radius: 0.35rem;
+  padding: 0.35rem 0.55rem;
+  color: #aaa;
+  background: transparent;
+  font: inherit;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.confidential-status button:focus-visible {
+  outline: 1px solid #aaa;
+  outline-offset: 3px;
+}
+
+.confidential-status__tooltip {
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  left: 0;
+  width: min(15rem, calc(100vw - 3rem));
+  border: 1px solid #444;
+  padding: 0.65rem 0.75rem;
+  color: #d2d2d2;
+  background: #171717;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  text-transform: none;
+  visibility: hidden;
+  pointer-events: auto;
+}
+
+.confidential-status__tooltip::after {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 0.5rem;
+  content: '';
+}
+
+.confidential-status.is-open .confidential-status__tooltip {
+  visibility: visible;
+}
+
+.confidential-status.is-open button {
+  border-color: #777;
+  color: #d2d2d2;
+  background: #252525;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .confidential-status button:hover,
+  .confidential-status button:focus-visible {
+    border-color: #777;
+    color: #d2d2d2;
+    background: #252525;
+  }
+}
+
+@media (pointer: coarse) {
+  .confidential-status button {
+    min-height: 44px;
+  }
+}
