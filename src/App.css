@@ -935,6 +935,37 @@
 }
 
 @media (max-width: 480px) {
+  .project-preview.has-project-media {
+    min-height: 0;
+    justify-content: flex-start;
+    gap: 1rem;
+    padding-block: 1.25rem;
+  }
+
+  .project-preview.has-project-media .project-preview__visual:has(.project-preview__media[data-orientation]) {
+    flex: 0 0 auto;
+    margin-block: 0;
+  }
+
+  .project-preview.has-project-media .project-preview__media {
+    position: relative;
+    inset: auto;
+    height: auto;
+  }
+
+  .project-preview.has-project-media .project-preview__media[data-orientation='landscape'] {
+    max-height: none;
+  }
+
+  .project-preview.has-project-media .project-preview__media[data-orientation='portrait'] {
+    aspect-ratio: var(--media-ratio, 0.5625);
+    max-height: calc(57.6svh - 5rem);
+  }
+
+  .project-preview.has-project-media:has(.project-preview__video[data-orientation='landscape']) .project-preview__caption {
+    margin-bottom: 0;
+  }
+
   .hero__eyebrow,
   .selected-work__header p,
   .about-contact__label,
